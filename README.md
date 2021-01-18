@@ -17,15 +17,19 @@ In this tutorial I'm going to explain the solution I found to run jupyter notebo
 
 ### Step 1. Running jupyter notebook in a computer node
 
-    - Log into the Willerslev servers (on Figure 1.1, you should replace the Xs highlighted in yellow for your user).
-    - Check which computing node you want to run jupyter notebook on.
-    - Log into the computing node (on Figure 1.1, represented as Ss highlighted in red)
-    - Run jupyter notebook in `--no-browser` mode. You also must decide a port, which is a 4 digits number (on Figure 1.1, represented as 9s highlighted in green) which must be unique to your connection, otherwise it gives problems. 
+- Log into the Willerslev servers (on Figure 1.1, you should replace the Xs highlighted in yellow for your user).
+- Check which computing node you want to run jupyter notebook on.
+- Log into the computing node (on Figure 1.1, represented as Ss highlighted in red)
+- Run jupyter notebook in `--no-browser` mode. You also must decide a port, which is a 4 digits number (on Figure 1.1, represented as 9s highlighted in green) which must be unique to your connection, otherwise it gives problems. 
 
+
+```python
 ssh XXXXXX@ssh-snm-willerslev.science.ku.dk
 tmon
 ssh SSSSSS
 jupyter lab --no-browser --port=9999
+```
+
 ### Step 2. Open the first ssh tunnel
 
     - On a new terminal, log into the Willerslev servers (on Figure 1.2, you should replace the Xs highlighted in yellow for your user).

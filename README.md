@@ -1,4 +1,4 @@
-# Jupyter Notebook in Willerslev servers
+# Jupyter Notebook on Willerslev servers
 
 ###### Moisès Coll Macià
 ###### 18/01/21

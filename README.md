@@ -13,7 +13,7 @@
     - 2.1. Port uniqueness
     - 2.2. Close shh tunnels
     - 2.3. ssh termination
-3. [Script](#script)
+3. [Automating script](#script)
     - 3.1. Script potential issues and important details
 4. [Acknowledgements](#ackn)
 
@@ -113,13 +113,13 @@ Let me know if you find more problems while using these to run jupyter notebook 
 <a name="script"></a>
 ## 3. Automating script
 
-I wrote the [kuju.sh](kuju.sh) (yes... not feeling creative to give it a better name :) ) bash script which automates all 4 steps expained in **Step by step pipeline**. At the begining of the script, you will find variables which will need to be manually configured (e.g. `ku_us` variable is your KU username or the ports `p1`, `p2`, `p3`). After that, the only manual work is to figure out which computing node you want to run jupyter notebook on (e.g., "biceps-snm") and run the following command:
+I wrote the [kuju.sh](kuju.sh) (yes... not feeling creative to give it a better name :) ) bash script which automates all 4 steps expained in **Step by step pipeline**. At the begining of the script, you will find variables which will need to be manually configured (e.g. `ku_us` variable is your KU username or the port numbers `p1`, `p2`, `p3`). After that, the only manual work left is to figure out which computing node you want to run jupyter notebook on (e.g., "biceps-snm"). Once you've decided for one you can run the following command:
 
 ```bash
 bash kuju.sh biceps-snm
 ```
 
-Because the tunnels and the jupyter notebook is running in a tmux session, I also incorporated a way to kill those tmux sessions. You can do that by running the following:
+Because the tunnels and the jupyter notebook are running in different tmux sessions, I also incorporated a way to kill those tmux sessions to finish all processes. You can do that by running the following:
 
 ```bash
 bash kuju.sh biceps-snm kill
@@ -139,9 +139,9 @@ It's important that you also indicate the computing node.
 
 5. The last command opens Google chrome to access to jupyter notebook. If you don't have the browser installed, it might lead to a problem.
 
-6. I'm a Mac user, which might mean that my solution works fine for other mac users, but not Windows or Linux.
+6. I'm a Mac user, which might imply that my solutions and script works fine for other mac users, but not Windows or Linux.
 
-Please, let me know if you encounter problems when you run my pipeline on your computer and also if you find solutions for your problems; I will post it in this github page so that other users might also benefit from your effort!
+Please, let me know if you encounter problems when you run my pipeline on your computer and also if you find solutions for your problems; I will post them on this github page so that other users can also benefit from your effort!
 
 <a name="ackn"></a>
 ## 4. Acknowledgements

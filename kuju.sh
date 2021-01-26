@@ -47,6 +47,7 @@ then
 	fi
 
 	#B.4 Step 4 - Jupyter notebook in your local machine browser
+	echo "4) Open Google Chrome to access jupyter notebook on your local computer"
 	open --new -a "Google Chrome" --args "http://localhost:${p3}/"
 else
 	echo "Killing tmux server from ${c1}"

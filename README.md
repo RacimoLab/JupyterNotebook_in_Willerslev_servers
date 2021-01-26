@@ -86,7 +86,8 @@ ssh XXXXXX@ssh-snm-willerslev.science.ku.dk -L 7777:localhost:8888 -N
 
 - Open your favourite browser and type `localhost:7777`
 - TADAAAA!
-    
+
+<a name="caveats"></a>
 ## 2. Caveats and considerations
 
 ### 2.1. Port uniqueness
@@ -110,6 +111,7 @@ Sometimes, when the ssh doesn't receive orders, it automatically closes down. Th
 
 Let me know if you find more problems while using these to run jupyter notebook that are not reported here and if you have improvements and suggestions!
 
+<a name="script"></a>
 ## 3. Script
 
 I wrote the [kuju.sh](kuju.sh) bash script which automates all 4 steps expained in **Step by step pipeline**. At the begining of the script, you will find variables which will need to be manually configured (e.g. `ku_us` variable is your KU username or the ports `p1`, `p2`, `p3`). After that, the only manual work is to figure out which computing node you want to run jupyter notebook on (e.g., "biceps-snm") and run the following command:
@@ -128,6 +130,7 @@ Some issues you might consider before running the script:
 
 Please, let me know if you encounter problems when you run my pipeline on your computer and also if you find solutions for your problems; I will post it in this github page so that other users might also benefit from your effort!
 
+<a name="ackn"></a>
 ## 4. Acknowledgements
 
 I would like to thank Graham Gower for his techical comments on ports and the proper way to kill a process (Cntrl-C) instead of suspending it (Cntrl-Z) when stopping shh tunnels. He's also giving me input for how atutomatize this whole process which I hope to achieve soon and update this instructions with it. 

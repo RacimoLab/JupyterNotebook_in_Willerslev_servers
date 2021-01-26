@@ -22,17 +22,17 @@ It's important to notice that P must be 1024 >= P <= 65535. More info about port
 
 ## Contents
 
-1. Step by step pipeline
+[1. Step by step pipeline](#stepbystep)
 - 1.1. Running jupyter notebook on C1
 - 1.2. Open the first ssh tunnel on C2
 - 1.3. Open the first ssh tunnel on C2
 - 1.4. Jupyter notebook in your local machine browser
-2. Caveats and considerations
+[2. Caveats and considerations](#caveats)
 - 2.1. Port uniqueness
 - 2.2. Close shh tunnels
 - 2.3. ssh termination
-3. Script
-4. Acknowledgements
+[3. Script](#script)
+[4. Acknowledgements](#ackn)
 
 ![](Figure1.png)
 

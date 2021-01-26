@@ -2,6 +2,20 @@
 
 ###### Moisès Coll Macià - 20/01/21
 
+## Contents
+
+1. [Step by step pipeline](#stepbystep)
+    - 1.1. Running jupyter notebook on C1
+    - 1.2. Open the first ssh tunnel on C2
+    - 1.3. Open the first ssh tunnel on C2
+    - 1.4. Jupyter notebook in your local machine browser
+2. [Caveats and considerations](#caveats)
+    - 2.1. Port uniqueness
+    - 2.2. Close shh tunnels
+    - 2.3. ssh termination
+3. [Script](#script)
+    - 3.1. Script potential issues and important details
+4. [Acknowledgements](#ackn)
 
 In this tutorial I'm going to explain the solution I found to run jupyter notebook in the Willerslev servers remotely from a personal computer. I'm mainly based on [this](https://medium.com/@sankarshan7/how-to-run-jupyter-notebook-in-server-which-is-at-multi-hop-distance-a02bc8e78314) blog post which explains a similar problem. The different steps are shown in **Figure 1** and explained below. The idea is to create an *ssh tunnel* from a computing node (C1), where your jupyther notebook will be running, to the front-end (C2) of Willerslev servers (Step 1 and 2) and another tunnel from the front-end in Willerslev servers to your working station (C3) to open jupyter notebook in your computer browser (Step 3 and Step 4). I assume you've already installed jupyter notebook and all it's dependences and you know how to login to the Willerslev servers. 
 
@@ -19,21 +33,6 @@ Notation summary:
     - P3 -> C3's port. Here denoted as `7777`.
     
 It's important to notice that P must be 1024 >= P <= 65535. More info about ports can be found [here](https://www.ssh.com/ssh/port) and [here](https://linuxhint.com/change_default_ssh_port/).
-
-
-## Contents
-
-1. [Step by step pipeline](#stepbystep)
-- 1.1. Running jupyter notebook on C1
-- 1.2. Open the first ssh tunnel on C2
-- 1.3. Open the first ssh tunnel on C2
-- 1.4. Jupyter notebook in your local machine browser
-2. [Caveats and considerations](#caveats)
-- 2.1. Port uniqueness
-- 2.2. Close shh tunnels
-- 2.3. ssh termination
-3. [Script](#script)
-4. [Acknowledgements](#ackn)
 
 ![](Figure1.png)
 
@@ -112,21 +111,35 @@ Sometimes, when the ssh doesn't receive orders, it automatically closes down. Th
 Let me know if you find more problems while using these to run jupyter notebook that are not reported here and if you have improvements and suggestions!
 
 <a name="script"></a>
-## 3. Script
+## 3. Automating script
 
-I wrote the [kuju.sh](kuju.sh) bash script which automates all 4 steps expained in **Step by step pipeline**. At the begining of the script, you will find variables which will need to be manually configured (e.g. `ku_us` variable is your KU username or the ports `p1`, `p2`, `p3`). After that, the only manual work is to figure out which computing node you want to run jupyter notebook on (e.g., "biceps-snm") and run the following command:
+I wrote the [kuju.sh](kuju.sh) (yes... not feeling creative to give it a better name :) ) bash script which automates all 4 steps expained in **Step by step pipeline**. At the begining of the script, you will find variables which will need to be manually configured (e.g. `ku_us` variable is your KU username or the ports `p1`, `p2`, `p3`). After that, the only manual work is to figure out which computing node you want to run jupyter notebook on (e.g., "biceps-snm") and run the following command:
 
 ```bash
 bash kuju.sh biceps-snm
 ```
 
-Some issues you might consider before running the script:
+Because the tunnels and the jupyter notebook is running in a tmux session, I also incorporated a way to kill those tmux sessions. You can do that by running the following:
+
+```bash
+bash kuju.sh biceps-snm kill
+```
+
+It's important that you also indicate the computing node.
+
+### 3.1. Script potential issues and important details
 
 1. I use `tmux` in order to open a terminal from which I can log out both in the Willerslev servers and in my local computer. Make sure you have installed `tmux` in both. I installed `tmux` in my local computer using `brew` as shown in [here](https://linuxize.com/post/getting-started-with-tmux/).
-2. Try to be creative and change the ports. As I say before, it is important that your port is unique!
-3. Make sure you can access the Willerslev servers and it's computing nodes without typing your password manually. If you want to generate your ssh key, check this [link](https://www.ssh.com/ssh/keygen/). In my case, the pipeline was getting stuck in "step 2" because to access a computing node from the front-end my script was required to type a password, which was not prepared for.
-4. The last command opens Google chrome to access to jupyter notebook. If you don't have the browser installed, it might lead to a problem.
-5. I'm a Mac user, which might mean that my solution works fine for other mac users, but not Windows or Linux.
+
+2. The pipeline checks if there is already a tmux session running with the defined name. If there is not, `tmux` returns a warning like `failed to connect to server` or `no server running on /private/tmp/tmux-1349466776/default`. This will be printed in your terminal but is not a sign of things going wrong, it's just me not knowing how to avoid it to be printed on the terminal :) .
+
+3. Try to be creative and change the ports. As I say before, it is important that your port is unique!
+
+4. Make sure you can access the Willerslev servers and it's computing nodes without typing your password manually. If you want to generate your ssh key, check this [link](https://www.ssh.com/ssh/keygen/). In my case, the pipeline was getting stuck in "step 2" because to access a computing node from the front-end my script was required to type a password, which was not prepared for.
+
+5. The last command opens Google chrome to access to jupyter notebook. If you don't have the browser installed, it might lead to a problem.
+
+6. I'm a Mac user, which might mean that my solution works fine for other mac users, but not Windows or Linux.
 
 Please, let me know if you encounter problems when you run my pipeline on your computer and also if you find solutions for your problems; I will post it in this github page so that other users might also benefit from your effort!
 
